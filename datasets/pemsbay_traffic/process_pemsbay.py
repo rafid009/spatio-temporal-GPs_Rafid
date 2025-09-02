@@ -4,8 +4,8 @@ import sys
 sys.path.append('../../experiments/')
 import utils
 
-filename = "./data/pems_bay/pems-bay.h5"
-loc_filename = "./data/pems_bay/sensor_locations_bay.csv"
+filename = "../../data/pems_bay/pems-bay.h5"
+loc_filename = "../../data/pems_bay/sensor_locations_bay.csv"
 
 # h5 = h5py.File(filename,'r')
 
