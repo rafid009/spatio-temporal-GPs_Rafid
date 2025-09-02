@@ -71,7 +71,7 @@ data = pd.DataFrame({
     'epoch': new_index
 })
 data = data.loc[data.index.repeat(coords_len)].reset_index(drop=True)
-print(f"data: {data}")
+# print(f"data: {data}")
 
 dict_values = {
     'datetime': data['epoch'].values,
