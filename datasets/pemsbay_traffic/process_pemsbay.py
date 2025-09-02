@@ -64,16 +64,24 @@ print(df.values.shape)
 
 df_locs = pd.read_csv(loc_filename)
 print(f"coords: {df_locs['longitude'].shape}")
+coords_len = df_locs['longitude'].shape[0]
+
+data = pd.DataFrame({
+    'epoch': new_index
+})
+data = data.loc[data.index.repeat(coords_len)].reset_index(drop=True)
+print(f"data: {data}")
+
 dict_values = {
     'datetime': new_index,
     'longitude': df_locs['longitude'],
     'latitude': df_locs['latitude'],
     'speed': df.values.tolist()
 }
-new_df = pd.DataFrame()
-new_df.replace(0, np.nan, inplace=True)
-new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
-new_df.to_csv("data/pems_bay/clean_pemsbay.csv", index=False)
+# new_df = pd.DataFrame()
+# new_df.replace(0, np.nan, inplace=True)
+# new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
+# new_df.to_csv("data/pems_bay/clean_pemsbay.csv", index=False)
 # 
 
 # train_loc_indices, test_loc_indices = get_train_test_locations(df.values)
