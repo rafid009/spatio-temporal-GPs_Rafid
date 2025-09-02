@@ -82,7 +82,9 @@ dict_values = {
 new_df = pd.DataFrame(dict_values)
 new_df.replace(0, np.nan, inplace=True)
 new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
-new_df.to_csv("data/pems_bay/clean_pemsbay.csv", index=False)
+
+
+new_df.to_csv("../../data/pems_bay/clean_pemsbay.csv", index=False)
 # 
 
 # train_loc_indices, test_loc_indices = get_train_test_locations(df.values)
