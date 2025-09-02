@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
-
+import sys
+sys.path.append('../../experiments/')
+import utils
 
 filename = "./data/pems_bay/pems-bay.h5"
 loc_filename = "./data/pems_bay/sensor_locations_bay.csv"
@@ -12,40 +14,40 @@ loc_filename = "./data/pems_bay/sensor_locations_bay.csv"
 # print(h5['df'].values)
 
 # h5.close()
-def get_train_test_locations(df_values):
-    all_locs = np.arange(df_values.shape[1])
-    train_locs = np.random.choice(all_locs, size=int(df_values.shape[1] * 0.8), replace=False)
-    test_locs = np.setdiff1d(all_locs, train_locs)  # All indices not in train_locs
-    return train_locs, test_locs
+# def get_train_test_locations(df_values):
+#     all_locs = np.arange(df_values.shape[1])
+#     train_locs = np.random.choice(all_locs, size=int(df_values.shape[1] * 0.8), replace=False)
+#     test_locs = np.setdiff1d(all_locs, train_locs)  # All indices not in train_locs
+#     return train_locs, test_locs
 
-def get_segmented_data(df, window_length):
-    df[df==0] = np.nan
-    n, num_cols = df.shape  # n rows, 325 columns
+# def get_segmented_data(df, window_length):
+#     df[df==0] = np.nan
+#     n, num_cols = df.shape  # n rows, 325 columns
 
-    rows_per_segment = window_length
+#     rows_per_segment = window_length
 
-    # Determine how many complete segments of 288 rows we need (ceiling division)
-    num_segments = int(np.ceil(n / rows_per_segment))
+#     # Determine how many complete segments of 288 rows we need (ceiling division)
+#     num_segments = int(np.ceil(n / rows_per_segment))
 
-    # Total rows required after padding
-    total_rows = num_segments * rows_per_segment
+#     # Total rows required after padding
+#     total_rows = num_segments * rows_per_segment
 
-    # Compute how many rows need to be padded
-    pad_rows = total_rows - n
+#     # Compute how many rows need to be padded
+#     pad_rows = total_rows - n
 
-    # Pad the array with zeros along the row axis (axis 0)
-    padded_data = np.pad(df, pad_width=((0, pad_rows), (0, 0)), mode='constant', constant_values=0)
+#     # Pad the array with zeros along the row axis (axis 0)
+#     padded_data = np.pad(df, pad_width=((0, pad_rows), (0, 0)), mode='constant', constant_values=0)
 
-    # Reshape into (-1, 288, 325)
-    return padded_data.reshape(num_segments, rows_per_segment, num_cols)
+#     # Reshape into (-1, 288, 325)
+#     return padded_data.reshape(num_segments, rows_per_segment, num_cols)
     # return df.reshape(-1, window_length, df.shape[1])
 
-def separate_train_test():
-    pass
+# def separate_train_test():
+#     pass
 
-window_length = 12
+# window_length = 12
 df = pd.read_hdf(filename, 'speed')
-print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
+# print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
 
 # if hasattr(df.index, 'freq') and isinstance(df.index.freq, (bytes, np.bytes_)):
 #     df.index.freq = df.index.freq.decode('utf-8')
@@ -55,12 +57,18 @@ date_strings = df.index.strftime('%m/%d/%Y %H:%M:%S')  # But this may fail if fr
 new_index = pd.to_datetime(date_strings, format='%m/%d/%Y %H:%M:%S', errors='coerce')
 df.index = new_index
 print(new_index)
-print(df.index)
+# print(df.index)
 print(df.shape)
 print(df.keys())
 print(df.values.shape)
-# df.replace(0, np.nan, inplace=True)
-# df_locs = pd.read_csv(loc_filename)
+
+df_locs = pd.read_csv(loc_filename)
+
+new_df = pd.DataFrame([new_index, df_locs['longitude'], df_locs['latitude'], df.values], ['epoch', 'longitude', 'latitude', 'speed'])
+new_df.replace(0, np.nan, inplace=True)
+new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
+new_df.to_csv("data/pems_bay/clean_pemsbay.csv", index=False)
+# 
 
 # train_loc_indices, test_loc_indices = get_train_test_locations(df.values)
 
