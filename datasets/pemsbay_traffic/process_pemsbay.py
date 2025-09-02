@@ -63,7 +63,7 @@ print(df.keys())
 print(df.values.shape)
 
 df_locs = pd.read_csv(loc_filename)
-print(f"coords: {df_locs['longitude']}")
+print(f"coords: {df_locs['longitude'].shape}")
 dict_values = {
     'datetime': new_index,
     'longitude': df_locs['longitude'],
