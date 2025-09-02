@@ -64,7 +64,7 @@ print(df.values.shape)
 
 df_locs = pd.read_csv(loc_filename)
 
-new_df = pd.DataFrame([new_index, df_locs['longitude'], df_locs['latitude'], df.values], ['epoch', 'longitude', 'latitude', 'speed'])
+new_df = pd.DataFrame([new_index, df_locs['longitude'], df_locs['latitude'], df.values], columns=['epoch', 'longitude', 'latitude', 'speed'])
 new_df.replace(0, np.nan, inplace=True)
 new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
 new_df.to_csv("data/pems_bay/clean_pemsbay.csv", index=False)
