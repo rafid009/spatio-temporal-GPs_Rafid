@@ -47,7 +47,7 @@ loc_filename = "../../data/pems_bay/sensor_locations_bay.csv"
 
 # window_length = 12
 df = pd.read_hdf(filename, 'speed')
-# print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
+print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
 
 # if hasattr(df.index, 'freq') and isinstance(df.index.freq, (bytes, np.bytes_)):
 #     df.index.freq = df.index.freq.decode('utf-8')
