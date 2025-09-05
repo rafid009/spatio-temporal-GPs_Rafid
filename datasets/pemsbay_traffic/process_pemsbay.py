@@ -37,7 +37,7 @@ speed = np.load(filename_speed)
 df_locs = pd.read_csv(loc_filename)
 print(f"coords: {df_locs['longitude'].shape}")
 coords_len = df_locs['longitude'].shape[0]
-time_len = df_date['datetime'].shape[0]
+
 
 data = pd.DataFrame({
     'epoch': pd.to_datetime(df_date['datetime'])
@@ -45,12 +45,12 @@ data = pd.DataFrame({
 print(f"data epoch before: {data['epoch']}")
 data = data.loc[data.index.repeat(coords_len)].reset_index(drop=True)
 
-
+time_len = df_date['datetime'].shape[0] // 2
 dict_values = {
-    'datetime': data['epoch'].values,
+    'datetime': data['epoch'].values[:int(len(data['epoch'].values)/2)],
     'longitude': np.tile(df_locs['longitude'].values, time_len),
     'latitude': np.tile(df_locs['latitude'].values, time_len),
-    'speed': speed.reshape(-1)
+    'speed': speed.reshape(-1)[:int(len(speed.reshape(-1))/2)]
 }
 print(dict_values['datetime'])
 new_df = pd.DataFrame(dict_values)
