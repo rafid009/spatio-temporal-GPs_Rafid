@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 sys.path.append('../../experiments/')
 import utils
+np.set_printoptions(threshold=np.inf)
 
 filename_datetime = "../../data/pems_bay/pems-bay-datetime.csv"
 filename_speed = "../../data/pems_bay/pems-bay-speed.npy"
@@ -50,6 +51,7 @@ dict_values = {
     'latitude': np.tile(df_locs['latitude'].values, time_len),
     'speed': speed.reshape(-1)
 }
+print(dict_values['datetime'])
 new_df = pd.DataFrame(dict_values)
 new_df.replace(0, np.nan, inplace=True)
 new_df['epoch'] = utils.datetime_to_epoch(new_df['datetime'])
