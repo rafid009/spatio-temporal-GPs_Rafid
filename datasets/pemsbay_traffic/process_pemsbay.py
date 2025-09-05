@@ -14,8 +14,8 @@ df_date = pd.read_csv(filename_datetime)
 # df = pd.read_hdf(filename, 'speed')
 # print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
 
-date_strings = df_date['datetime'] #.strftime('%m/%d/%Y %H:%M:%S')  # But this may fail if freq is bad; decode first.
-new_index = pd.to_datetime(date_strings, format='%m/%d/%Y %H:%M:%S', errors='coerce')
+# date_strings = df_date['datetime'] #.strftime('%m/%d/%Y %H:%M:%S')  # But this may fail if freq is bad; decode first.
+# new_index = pd.to_datetime(date_strings, format='%m/%d/%Y %H:%M:%S', errors='coerce')
 
 speed = np.load(filename_speed)
 # df.index = new_index
@@ -37,13 +37,14 @@ speed = np.load(filename_speed)
 df_locs = pd.read_csv(loc_filename)
 print(f"coords: {df_locs['longitude'].shape}")
 coords_len = df_locs['longitude'].shape[0]
-time_len = new_index.shape[0]
+time_len = df_date['datetime'].shape[0]
 
 data = pd.DataFrame({
-    'epoch': new_index
+    'epoch': pd.to_datetime(df_date['datetime'])
 })
+print(f"data epoch before: {data['epoch']}")
 data = data.loc[data.index.repeat(coords_len)].reset_index(drop=True)
-# print(f"data: {data}")
+
 
 dict_values = {
     'datetime': data['epoch'].values,
