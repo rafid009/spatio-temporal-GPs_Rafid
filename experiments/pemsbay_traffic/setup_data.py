@@ -207,7 +207,7 @@ if __name__ == "__main__":
     # data_df = data_df[(data_df['date'] >= DATE_START) & (data_df['date'] < DATE_END)]
 
     #data_df may have missing oberservations, for the state space we require X, Y to be on a grid, with missings denoted by nans
-    X = np.array(df[['epoch', 'Latitude', 'Longitude']])
+    X = np.array(df[['epoch', 'latitude', 'longitude']])
     Y = np.array(df['speed'])
 
     #remove duplicated data
