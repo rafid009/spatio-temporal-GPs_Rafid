@@ -391,6 +391,7 @@ def pad_with_nan_to_make_grid(X, Y):
 
     #construct target grid
     unique_time = np.unique(X[:, 0])
+    print(f"X[0]: {X[:, 0].shape}\n{X[:,0]}")
     unique_space = np.unique(X[:, 1:], axis=0)
 
     Nt = unique_time.shape[0]
