@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 sys.path.append('../../experiments/')
 import utils
-np.set_printoptions(threshold=np.inf)
+# np.set_printoptions(threshold=np.inf)
 
 filename_datetime = "../../data/pems_bay/pems-bay-datetime.csv"
 filename_speed = "../../data/pems_bay/pems-bay-speed.npy"
