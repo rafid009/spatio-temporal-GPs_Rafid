@@ -45,12 +45,12 @@ data = pd.DataFrame({
 print(f"data epoch before: {data['epoch']}")
 data = data.loc[data.index.repeat(coords_len)].reset_index(drop=True)
 
-time_len = df_date['datetime'].shape[0] // 3
+time_len = df_date['datetime'].shape[0] // 20
 dict_values = {
-    'datetime': data['epoch'].values[:int(len(data['epoch'].values)/3)],
+    'datetime': data['epoch'].values[:int(len(data['epoch'].values)/20)],
     'longitude': np.tile(df_locs['longitude'].values, time_len),
     'latitude': np.tile(df_locs['latitude'].values, time_len),
-    'speed': speed.reshape(-1)[:int(len(speed.reshape(-1))/3)]
+    'speed': speed.reshape(-1)[:int(len(speed.reshape(-1))/20)]
 }
 print(dict_values['datetime'])
 new_df = pd.DataFrame(dict_values)
