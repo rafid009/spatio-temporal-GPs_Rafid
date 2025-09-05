@@ -419,7 +419,7 @@ def pad_with_nan_to_make_grid(X, Y):
 
     X_to_add = _X[idx, :]
     Y_to_add = _Y[idx, :]
-
+    print(f"X: {X.shape}, X_to_add: {X_to_add.shape}, Y: {Y.shape}, Y_to_add: {Y_to_add.shape}")
     X_grid = np.vstack([X, X_to_add])
     Y_grid = np.vstack([Y, Y_to_add])
 

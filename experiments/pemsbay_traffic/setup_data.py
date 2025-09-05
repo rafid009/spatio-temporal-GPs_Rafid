@@ -216,6 +216,7 @@ if __name__ == "__main__":
     # Y = Y[unique_idx, :]
 
     # For the filtering methods to work we need a full spatio-temporal grid
+    print(f"X df: {X.shape}, Y df: {Y.shape}")
     X_raw, Y_raw = pad_with_nan_to_make_grid(X.copy(), Y.copy())
 
     N = X.shape[0]
