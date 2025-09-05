@@ -4,64 +4,35 @@ import sys
 sys.path.append('../../experiments/')
 import utils
 
-filename = "../../data/pems_bay/pems-bay.h5"
+filename_datetime = "../../data/pems_bay/pems-bay-datetime.csv"
+filename_speed = "../../data/pems_bay/pems-bay-speed.npy"
 loc_filename = "../../data/pems_bay/sensor_locations_bay.csv"
 
-# h5 = h5py.File(filename,'r')
+df_date = pd.read_csv(filename_datetime)
 
-# print(list(h5['speed'].keys()))
-# print(h5['speed']['block0_values'][0:-1].shape)
-# print(h5['df'].values)
+# df = pd.read_hdf(filename, 'speed')
+# print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
 
-# h5.close()
-# def get_train_test_locations(df_values):
-#     all_locs = np.arange(df_values.shape[1])
-#     train_locs = np.random.choice(all_locs, size=int(df_values.shape[1] * 0.8), replace=False)
-#     test_locs = np.setdiff1d(all_locs, train_locs)  # All indices not in train_locs
-#     return train_locs, test_locs
-
-# def get_segmented_data(df, window_length):
-#     df[df==0] = np.nan
-#     n, num_cols = df.shape  # n rows, 325 columns
-
-#     rows_per_segment = window_length
-
-#     # Determine how many complete segments of 288 rows we need (ceiling division)
-#     num_segments = int(np.ceil(n / rows_per_segment))
-
-#     # Total rows required after padding
-#     total_rows = num_segments * rows_per_segment
-
-#     # Compute how many rows need to be padded
-#     pad_rows = total_rows - n
-
-#     # Pad the array with zeros along the row axis (axis 0)
-#     padded_data = np.pad(df, pad_width=((0, pad_rows), (0, 0)), mode='constant', constant_values=0)
-
-#     # Reshape into (-1, 288, 325)
-#     return padded_data.reshape(num_segments, rows_per_segment, num_cols)
-    # return df.reshape(-1, window_length, df.shape[1])
-
-# def separate_train_test():
-#     pass
-
-# window_length = 12
-df = pd.read_hdf(filename, 'speed')
-print(f"time0: {df.index[0]}, time last: {df.index[-1]}")
-
-# if hasattr(df.index, 'freq') and isinstance(df.index.freq, (bytes, np.bytes_)):
-#     df.index.freq = df.index.freq.decode('utf-8')
-# print(pd.to_datetime(df.index, format='%m/%d/%Y %H:%M:%S', errors='coerce'))
-
-date_strings = df.index.strftime('%m/%d/%Y %H:%M:%S')  # But this may fail if freq is bad; decode first.
+date_strings = df_date['datetime'] #.strftime('%m/%d/%Y %H:%M:%S')  # But this may fail if freq is bad; decode first.
 new_index = pd.to_datetime(date_strings, format='%m/%d/%Y %H:%M:%S', errors='coerce')
-df.index = new_index
-print(new_index)
-# print(df.index)
-print(df.shape)
-print(df.keys())
-print(df.values.shape)
 
+speed = np.load(filename_speed)
+# df.index = new_index
+
+# df_dict = {
+#     "datetime": new_index
+# }
+
+# df_new = pd.DataFrame(df_dict)
+# df_new.to_csv("../../data/pems_bay/pems-bay-datetime.csv", index=False)
+# np.save("../../data/pems_bay/pems-bay-speed.npy", df.values)
+
+# print(new_index)
+# # print(df.index)
+# print(df.shape)
+# print(df.keys())
+# print(df.values.shape)
+# exit()
 df_locs = pd.read_csv(loc_filename)
 print(f"coords: {df_locs['longitude'].shape}")
 coords_len = df_locs['longitude'].shape[0]
@@ -77,7 +48,7 @@ dict_values = {
     'datetime': data['epoch'].values,
     'longitude': np.tile(df_locs['longitude'].values, time_len),
     'latitude': np.tile(df_locs['latitude'].values, time_len),
-    'speed': df.values.reshape(-1)
+    'speed': speed.reshape(-1)
 }
 new_df = pd.DataFrame(dict_values)
 new_df.replace(0, np.nan, inplace=True)
