@@ -187,8 +187,8 @@ if __name__ == "__main__":
     import utils 
 
     #ensure correct data structure
-    Path("data/pems_bay").mkdir(exist_ok=True)
-    Path("results/pems_bay").mkdir(exist_ok=True)
+    Path("pems-bay-data").mkdir(exist_ok=True)
+    Path("pems-bay-results").mkdir(exist_ok=True)
 
     #clean data and get prediction site location
     df = load_data()
@@ -322,14 +322,14 @@ if __name__ == "__main__":
             # }
         }
 
-        with open(f'data/{train_name}', 'wb') as file:
+        with open(f'pems-bay-data/{train_name}', 'wb') as file:
             pickle.dump(training_data, file)
 
-        with open(f'data/{pred_name}', "wb") as file:
+        with open(f'pems-bay-data/{pred_name}', "wb") as file:
             pickle.dump(prediction_data, file)
 
 
-        with open(f'data/{raw_name}', "wb") as file:
+        with open(f'pems-bay-data/{raw_name}', "wb") as file:
             pickle.dump(raw_data, file)
 
 
