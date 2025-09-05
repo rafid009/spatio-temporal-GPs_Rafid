@@ -208,7 +208,7 @@ if __name__ == "__main__":
 
     #data_df may have missing oberservations, for the state space we require X, Y to be on a grid, with missings denoted by nans
     X = np.array(df[['epoch', 'latitude', 'longitude']])
-    Y = np.array(df['speed'])
+    Y = np.array(df['speed']).reshape(-1, 1)
 
     #remove duplicated data
     # u, unique_idx = np.unique(X, return_index=True, axis=0)
