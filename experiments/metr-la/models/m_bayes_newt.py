@@ -135,6 +135,7 @@ print('average iter time: %2.2f secs' % avg_time_taken)
 posterior_mean, posterior_var = model.predict_y(X=t_t, R=R_t)
 nlpd = model.negative_log_predictive_density(X=t_t, R=R_t, Y=Y_t)
 rmse = np.sqrt(np.nanmean((np.squeeze(Y_t) - np.squeeze(posterior_mean))**2))
+print("METR-LA")
 print('nlpd: %2.3f' % nlpd)
 print('rmse: %2.3f' % rmse)
 
