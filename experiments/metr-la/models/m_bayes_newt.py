@@ -32,8 +32,8 @@ else:
     parallel = None
 
 # ===========================Load Data===========================
-train_data = pickle.load(open("../pems-bay-data/train_data_" + str(ind) + ".pickle", "rb"))
-pred_data = pickle.load(open("../pems-bay-data/pred_data_" + str(ind) + ".pickle", "rb"))
+train_data = pickle.load(open("../metr-la-data/train_data_" + str(ind) + ".pickle", "rb"))
+pred_data = pickle.load(open("../metr-la-data/pred_data_" + str(ind) + ".pickle", "rb"))
 
 X = train_data['X']
 Y = train_data['Y']
