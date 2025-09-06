@@ -66,7 +66,7 @@ print("num spatial points =", Nr)
 N = Y.shape[0] * Y.shape[1] * Y.shape[2]
 print("num data points =", N)
 
-var_y = 5.
+var_y = 1.
 var_f = 1.
 len_time = 0.001
 len_space = 0.2
