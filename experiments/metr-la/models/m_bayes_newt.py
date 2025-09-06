@@ -67,9 +67,9 @@ N = Y.shape[0] * Y.shape[1] * Y.shape[2]
 print("num data points =", N)
 
 var_y = 1.
-var_f = 1.
+var_f = 0.5
 len_time = 0.001
-len_space = 0.2
+len_space = 0.1
 
 sparse = True
 opt_z = True  # will be set to False if sparse=False
