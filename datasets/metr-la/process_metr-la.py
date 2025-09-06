@@ -5,7 +5,7 @@ sys.path.append('../../experiments/')
 import utils
 # np.set_printoptions(threshold=np.inf)
 
-filename_datetime = "../../data/metr-lay/metr-la-datetime.csv"
+filename_datetime = "../../data/metr-la/metr-la-datetime.csv"
 filename_speed = "../../data/metr-la/metr-la-speed.npy"
 loc_filename = "../../data/metr-la/sensor_locations_la.csv"
 
