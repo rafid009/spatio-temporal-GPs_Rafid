@@ -131,8 +131,10 @@ t1 = time.time()
 # print('optimisation time: %2.2f secs' % (t1-t0))
 avg_time_taken = (t1-t0)/iters
 print('average iter time: %2.2f secs' % avg_time_taken)
-
+start = time.time()
 posterior_mean, posterior_var = model.predict_y(X=t_t, R=R_t)
+end = time.time()
+print(f"time: {(end - start)/posterior_mean.shape[0]}")
 nlpd = model.negative_log_predictive_density(X=t_t, R=R_t, Y=Y_t)
 rmse = np.sqrt(np.nanmean((np.squeeze(Y_t) - np.squeeze(posterior_mean))**2))
 print("PEMS-BAY")
